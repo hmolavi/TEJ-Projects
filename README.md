@@ -15,7 +15,7 @@ Main Components Used:
 - 16×2 Character LCD Module
 - 12V Blower fan
 
-![FFR_front](https://github.com/hmolavi/TEJ-Projects/assets/75816912/1079ac49-2284-4453-aeac-fc5d43fd9359)
-![FFR_back](https://github.com/hmolavi/TEJ-Projects/assets/75816912/92658e15-f5fe-4386-bdf0-9d8e47cfdb1d)
+![FFR_back](https://github.com/hmolavi/TEJ-Projects/assets/75816912/c974ee8f-383b-4447-af44-cecb0fcbebcc)
+![FFR_front](https://github.com/hmolavi/TEJ-Projects/assets/75816912/ab39fc58-5994-4a1e-a203-31727acc43ae)
 
 ## LED Cube 
