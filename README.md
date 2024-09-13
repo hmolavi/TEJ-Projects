@@ -18,6 +18,16 @@ Main Components Used:
 ![FFR_back](https://github.com/hmolavi/TEJ-Projects/assets/75816912/c974ee8f-383b-4447-af44-cecb0fcbebcc)
 ![FFR_front](https://github.com/hmolavi/TEJ-Projects/assets/75816912/ab39fc58-5994-4a1e-a203-31727acc43ae)
 
+Here are the PCB layouts used for etching, designed by me:
+Main Controller  
+![Main Controller](https://github.com/user-attachments/assets/103db240-05c4-4505-9449-2c0ee441ead2)
+
+Motor Controller  
+![Motor Controller](https://github.com/user-attachments/assets/53ad3784-2fc6-45b9-9a63-f0e9e2647687)
+
+Fan Controller  
+![Fan Controller](https://github.com/user-attachments/assets/f590b0a5-bf9b-401a-a811-f56e1c266cc5)
+
 ## LED Cube 
 A 4x4x4 LED cube, 
 Used PWM technique in BASIC to display a set of complex animations
