@@ -1,0 +1,991 @@
+LiquidCrystal_I2C
+
+My led layout
+
+B6		B2		D6		D2
+
+B7		B3		D7		D3
+
+D0		B4		B0		D4
+
+D1		B5		B1		D5
+
+C4 - Top layer / 4th layer
+C5 - 3rd layer
+C6 - 2nd layer
+C7 - Bottom layer / 1st layer
+
+TRISB=%00000000
+TRISD=%00000000
+TRISC=%00000000
+
+LayersLightUp_Time var word
+LayersLightUp = 100
+
+WindMillLoop var word
+WindMillTime var word
+WindMillTime = 150
+
+SnakeSpeed var word           ‘moves 0.6 seconds per LED
+SnakeSpeed = 600
+IllusionLoopTwo var word
+IllusionLoopThree var word
+IllusionLoopFour var word
+
+Main:
+
+portd=%00000000			‘waits 1.5 seconds before starting the program
+portb=%00000000
+portc=%00000000
+Pause 1500			
+
+‘Layer Light up
+‘Low to high
+portb = %11111111
+portd = %11111111
+portc = %10000000
+Pause LayersLightUp
+
+portc = %01000000
+Pause LayersLightUp
+
+portc = %00100000
+Pause LayersLightUp
+
+portc = %00010000
+Pause LayersLightUp
+
+portd=%00000000
+portb=%00000000
+portc=%00000000
+Pause LayersLightUp	
+
+‘Left to right
+portc= %11110000
+portb= %11000000
+portd= %00000011
+Pause LayersLightUp
+
+portd= %00000000
+portb= %00111100
+Pause LayersLightUp
+
+portb= %00000011
+portd= %11000000
+Pause LayersLightUp
+
+portb= %00000000
+portd= %00111100
+Pause LayersLightUp
+
+portd=%00000000
+portb=%00000000
+portc=%00000000
+Pause LayersLightUp	
+
+‘Up to bottom
+portb= %01000100
+portd= %01000100
+Pause LayersLightUp
+
+portb= %10001000
+portd= %10001000
+Pause LayersLightUp
+
+portd= %00010001
+portb= %00010001
+Pause LayersLightUp
+
+portd= %00100010
+portb= %00100010
+Pause LayersLightUp
+
+portd=%00000000
+portb=%00000000
+portc=%00000000
+Pause LayersLightUp	
+
+‘Right to left
+portd= %00111100
+portb= %00000000
+Pause LayersLightUp
+
+portb= %00000011
+portd= %11000000
+Pause LayersLightUp
+
+portb=%00111100
+portd=%00000000
+Pause LayersLightUp
+
+portb=%11000000
+portd=%00000011
+Pause LayersLightUp
+
+portd=%00000000
+portb=%00000000
+portc=%00000000
+Pause LayersLightUp	
+
+‘Bottom to up
+portd= %00100010
+portb= %00100010
+Pause LayersLightUp
+
+portd= %00010001
+portb= %00010001
+Pause LayersLightUp
+
+portb= %10001000
+portd= %10001000
+Pause LayersLightUp
+
+portb= %01000100
+portd= %01000100
+Pause LayersLightUp
+
+portd=%00000000
+portb=%00000000
+portc=%00000000
+Pause LayersLightUp	
+
+‘High to low
+portb = %11111111
+portd = %11111111
+portc = %00010000
+Pause LayersLightUp
+
+portc = %00100000
+Pause LayersLightUp
+
+portc = %01000000
+Pause LayersLightUp
+
+portc = %10000000
+Pause LayersLightUp
+
+portd=%00000000
+portb=%00000000
+portc=%00000000
+Pause LayersLightUp	
+
+‘Snake animation
+portc=%10000000			‘C7
+portb=%01000000			‘B6 
+Pause SnakeSpeed			  ↑ End of snake
+
+portc=%10000000			‘C7
+portb=%11000000			‘B6 B7 
+Pause SnakeSpeed			        ↑ Middle of snake
+
+portc=%10000000			‘C7
+portb=%11000000			‘B6 B7 D0
+portd=%00000001			              ↑ Head of snake
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%10000000			‘B7 D0 D1
+portd=%00000011
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00100000			‘D0 D1 B5
+portd=%00000011
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00100010			‘D1 B5 B1
+portd=%00000010
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00100010			‘B5 B1 D5
+portd=%00100000
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00000010			‘B1 D5 D4
+portd=%00110000
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00000000			‘D5 D4 D3
+portd=%00111000
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00000000			‘D4 D3 D2
+portd=%00011100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00000000			‘D3 D2 D6
+portd=%01001100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00000100			‘D2 D6 B2
+portd=%01000100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00001100			‘D6 B2 B3
+portd=%01000000
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portb=%00011100			‘B2 B3 B4
+portd=%00000000
+Pause SnakeSpeed
+
+for IllusionLoopTwo = 1 to 100	‘100 loops of 6 millisecond = 600 seconds
+portc=%10000000			‘C7 (1st layer of the cube)
+portb=%00011000			‘B3 B4 
+Pause 3
+portc=%01000000			‘C6(2nd layer of the cube)
+portb=%00100000			‘B5
+Pause 3
+next IllusionLoopTwo 
+
+for IllusionLoopTwo = 1 to 100	
+portc=%10000000			‘C7 
+portb=%00010000			‘B4 
+Pause 3
+portc=%01000000			‘C6
+portb=%00100010			‘B5 B1
+Pause 3
+next IllusionLoopTwo
+
+portc=%01000000			‘C6
+portb=%00100010			‘B5 B1 D5
+portd=%00100000
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00000010			‘B1 D5 D4
+portd=%00110000
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00000000			‘D5 D4 D3
+portd=%00111000
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00000000			‘D4 D3 D2
+portd=%00011100
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00000000			‘D3 D2 D6
+portd=%01001100
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00000100			‘D2 D6 B2
+portd=%01000100
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00001100			‘D6 B2 B3
+portd=%01000000
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00011100			‘B2 B3 B4
+portd=%00000000
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00111000			‘B3 B4 B5
+Pause SnakeSpeed
+
+portc=%01000000			‘C6
+portb=%00110000			‘B4 B5 D1
+portd=%00000010
+Pause SnakeSpeed
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portb=%00100000			‘B5 D1
+portd=%00000010
+Pause 3
+portc=%00100000			‘C5
+portb=%00000000			‘D0
+portd=%00000001
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portb=%00000000			‘D1
+portd=%00000010
+Pause 3
+portc=%00100000			‘C5
+portb=%10000000			‘D0 B7
+portd=%00000001
+Pause 3
+next IllusionLoopTwo
+
+portc=%00100000			‘C5
+portb=%10001000			‘D0 B7 B3
+portd=%00000001
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%10001100			‘B7 B3 B2
+portd=%00000000
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%00001100			‘B3 B2 D6
+portd=%01000000
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%00000100			‘B2 D6 D2
+portd=%01000100
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%00000000			‘D6 D2 D3
+portd=%01001100
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%00000000			‘D2 D3 D4
+portd=%00011100
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%00000001			‘D3 D4 B0
+portd=%00011000
+Pause SnakeSpeed
+
+portc=%00100000			‘C5
+portb=%00010001			‘D4 B0 B4
+portd=%00010000
+Pause SnakeSpeed
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00100000			‘C5
+portb=%00010001			‘B0 B4 
+portd=%00000000
+Pause SnakeSpeed
+Pause 3
+portc=%00010000			‘C4
+portb=%00000000			‘D0
+portd=%00000001
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00100000			‘C5
+portb=%00010000			‘B4 
+portd=%00000000
+Pause SnakeSpeed
+Pause 3
+portc=%00010000			‘C4
+portb=%00000000			‘D0 D1
+portd=%00000011
+Pause 3
+next IllusionLoopTwo
+
+portc=%00010000			‘C4
+portb=%00100000			‘D0 D1 B5
+portd=%00000011
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00100010			‘D1 B5 B1
+portd=%00000010
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00100010			‘B5 B1 D5
+portd=%00100000
+Pause SnakeSpeed
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00010000			‘C4
+portb=%00000010			‘B1 D5
+portd=%00100000
+Pause 3
+portc=%00100000			‘C5
+portb=%00000000			‘D4
+portd=%00010000
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopThree = 1 to 100	
+portc=%00010000			‘C4
+portd=%00100000			‘D5
+Pause 2
+portc=%00100000			‘C5
+portd=%00010000			‘D4
+Pause 2
+portc=%01000000			‘C6
+portd=%00001000			‘D3 
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopThree = 1 to 100	
+portc=%00100000			‘C5
+portd=%00010000			‘D4
+Pause 2
+portc=%01000000			‘C6
+portd=%00001000			‘D3
+Pause 2
+portc=%10000000			‘C7
+portd=%00000100			‘D2
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portd=%00001000			‘D3
+Pause 3
+portc=%10000000			‘C7
+portd=%01000100			‘D2 D6
+Pause 3
+next IllusionLoopTwo
+
+portc=%10000000			‘C7
+portd=%01000100			‘D2 D6 B2
+portb=%00000100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portd=%01000000			‘D6 B2 B6
+portb=%01000100
+Pause SnakeSpeed
+portd=%00000000
+for IllusionLoopTwo = 1 to 100	
+portc=%10000000			‘C7
+portb=%01000100			‘B2 B6 
+Pause 3
+portc=%01000000			‘C6
+portb=%10000000			‘B7
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopThree = 1 to 100	
+portc=%10000000			‘C7
+portb=%01000000			‘B6
+portd=%00000000 
+Pause 2
+portc=%01000000			‘C6
+portb=%10000000			‘B7
+Pause 2
+portc=%00100000			‘C5
+portd=%00000001			‘D0
+portb=%00000000
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopThree = 1 to 100	
+portc=%01000000			‘C6
+portb=%10000000			‘B7
+Pause 2
+portc=%00100000			‘C5
+portd=%00000001			‘D0
+portb=%00000000
+Pause 2
+portc=%00010000			‘C4
+portb=%00000000			‘D1
+portd=%00000010 
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00100000			‘C5
+portd=%00000001			‘D0
+portb=%00000000
+Pause 3
+portc=%00010000			‘C4
+portb=%00100000			‘D1 B5
+portd=%00000010 
+Pause 3
+next IllusionLoopTwo
+
+portc=%00010000			‘C4
+portb=%00100010			‘D1 B5 B1
+portd=%00000010 
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00100010			‘B5 B1 D5
+portd=%00100000 
+Pause SnakeSpeed
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00010000			‘C4
+portb=%00000010			‘B1 D5
+portd=%00100000
+Pause 3
+portc=%00100000			‘C5
+portb=%00000000			‘D4
+portd=%00010000
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopThree = 1 to 100	
+portc=%00010000			‘C4
+portd=%00100000			‘D5
+Pause 2
+portc=%00100000			‘C5
+portd=%00010000			‘D4
+Pause 2
+portc=%01000000			‘C6
+portd=%00001000			‘D3 
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopThree = 1 to 100	
+portc=%00100000			‘C5
+portd=%00010000			‘D4
+Pause 2
+portc=%01000000			‘C6
+portd=%00001000			‘D3
+Pause 2
+portc=%10000000			‘C7
+portd=%00000100			‘D2
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portd=%00001000			‘D3
+Pause 3
+portc=%10000000			‘C7
+portd=%01000100			‘D2 D6
+Pause 3
+next IllusionLoopTwo
+
+portc=%10000000			‘C7
+portd=%01000100			‘D2 D6 B2
+portb=%00000100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portd=%01000000			‘D6 B2 B3
+portb=%00001100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portd=%00000000			‘B2 B3 B4
+portb=%00011100
+Pause SnakeSpeed
+
+portc=%10000000			‘C7
+portd=%00000000			‘B3 B4 B0
+portb=%00011001
+Pause SnakeSpeed
+
+for IllusionLoopTwo = 1 to 100	
+portc=%10000000			‘C7
+portd=%00000000			‘B4 B0
+portb=%00010001
+Pause 3
+portc=%01000000			‘C6
+portb=%00000000			‘D7
+portd=%10000000
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%10000000			‘C7
+portd=%00000000			‘B0
+portb=%00000001
+Pause 3
+portc=%01000000			‘C6
+portb=%00001000			‘D7 B3
+portd=%10000000
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portb=%00001000			‘D7 B3
+portd=%10000000
+Pause 3
+portc=%00100000			‘C5
+portd=%00000000			‘B4
+portb=%00010000
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portb=%00001000			‘B3
+Pause 3
+portc=%00100000			‘C5
+portb=%00010001			‘B4 B0
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00100000			‘C5
+portd=%00000000			‘B4 B0
+portb=%00010001
+Pause 3
+portc=%00010000			‘C4
+portb=%00000000			‘D7
+portd=%10000000
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopTwo = 1 to 100	
+portc=%00100000			‘C5
+portd=%00000000			‘B0
+portb=%00000001
+Pause 3
+portc=%00010000			‘C4
+portb=%00000000			‘D7 D6
+portd=%11000000
+Pause 3
+next IllusionLoopTwo
+
+portc=%00010000			‘C4
+portb=%00000100			‘D7 D6 B2
+portd=%11000000
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%01000100			‘D6 B2 B6
+portd=%01000000
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%11000100			‘B2 B6 B7
+portd=%00000000
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%11000000			‘B6 B7 D0
+portd=%00000001
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%10000000			‘B7 D0 D1
+portd=%00000011
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00100000			‘D0 D1 B5
+portd=%00000011
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00100010			‘D1 B5 B1
+portd=%00000010
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00100010			‘B5 B1 D5
+portd=%00100000
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00000010			‘B1 D5 D4
+portd=%00110000
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portb=%00000000			‘D5 D4 D3
+portd=%00111000
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portd=%00011100			‘D4 D3 D2
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portd=%01001100			‘D3 D2 D6
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portd=%01000100			‘D2 D6 B2
+portb=%00000100
+Pause SnakeSpeed
+
+portc=%00010000			‘C4
+portd=%01000000			‘D6 B2 B3
+portb=%00001100
+Pause SnakeSpeed
+
+portd=%00000000
+for IllusionLoopTwo = 1 to 100	
+portc=%00010000			‘C4
+portb=%00001100			‘B2 B3
+Pause 3
+portc=%00100000			‘C5
+portb=%00001000			‘B3
+Pause 3
+next IllusionLoopTwo
+
+for IllusionLoopThree = 1 to 100	
+portc=%00010000			‘C4
+portb=%00001000			‘B3
+Pause 2
+portc=%00100000			‘C5
+portb=%00001000			‘B3
+Pause 2
+portc=%01000000			‘C6
+portb=%00001000			‘B3
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopTwo = 1 to 100	
+portc=%01000000			‘C6
+portb=%00001000			‘B3
+Pause 3
+portc=%10000000			‘C7
+portb=%00001000			‘B3
+Pause 3
+next IllusionLoopTwo
+
+portc=%10000000			‘C7
+portb=%00001000			‘B3
+Pause 250
+
+‘Transition Code (from snake to windmill)
+portc=%10000000
+portb=%11011001
+portd=%11000001
+Pause 168
+
+for IllusionLoopTwo = 1 to  42
+portc=%10000000			‘C7
+portb=%11011101			‘B6 B2 D6 B7 B3 D7 D0 B4 B0
+portd=%11000001
+Pause 2
+portc=%01000000			‘C6
+portb=%10011100			‘B2 B7 B3 D7 B4
+portd=%10000000
+Pause 2
+next IllusionLoopTwo
+
+for IllusionLoopThree = 1 to 28	
+portc=%10000000			‘C7
+portb=%11011101			‘B6 B2 D6 B7 B3 D7 D0 B4 B0
+portd=%11000001			‘D1 B1 D4 D2
+Pause 2
+portc=%01000000			‘C6
+portb=%11011101			‘B2 B7 B3 D7 B4
+portd=%11000001			‘B6 D6 D0 B0
+Pause 2
+portc=%00100000			‘C5
+portb=%10011100			‘B2 B7 B3 D7 B4
+portd=%10000000
+Pause 2
+next IllusionLoopThree
+
+for IllusionLoopFour = 1 to 21
+portc=%10000000			‘C7
+portb=%11111111			‘B6 B2 D6 B7 B3 D7 D0 B4 B0 D1 B1 D4 D2
+portd=%11111111			‘B5 D5 D3 
+Pause 2
+portc=%01000000			‘C6
+portb=%11011111			‘B6 B2 D6 B7 B3 D7 D0 B4 B0
+portd=%11010111			‘D1 B1 D4 D2
+Pause 2
+portc=%00100000			‘C5
+portb=%11011101			‘B2 B7 B3 D7 B4
+portd=%11000001			‘B6 D6 D0 B0
+Pause 2
+portc=%00010000			‘C4
+portb=%10011100			‘B2 B7 B3 D7 B4
+portd=%10000000
+Pause 2
+Next IllusionLoopFour
+
+for IllusionLoopFour = 1 to 28
+portc=%11000000			‘C7 C6
+portb=%11111111			‘B6 B2 D6 B7 B3 D7 D0 B4 B0 D1 B1 D4 D2
+portd=%11111111			‘B5 D5 D3 
+Pause 2
+portc=%00100000			‘C5
+portb=%11011111			‘B2 B7 B3 D7 B4 B6 D6 D0 B0
+portd=%11010111			‘D1 B1 D4 D2
+Pause 2
+portc=%00010000			‘C4
+portb=%11011101			‘B2 B7 B3 D7 B4
+portd=%11000001			‘B6 D6 D0 B0 
+Pause 2
+Next IllusionLoopFour
+
+for IllusionLoopFour = 1 to 42
+portc=%11100000			‘C7 C6 C5
+portb=%11111111			‘B6 B2 D6 B7 B3 D7 D0 B4 B0 D1 B1 D4 D2
+portd=%11111111			‘B5 D5 D3 
+Pause 2
+portc=%00010000			‘C4
+portb=%11011111			‘B2 B7 B3 D7 B4 B6 D6 D0 B0
+portd=%11010111			‘D1 B1 D4 D2 
+Pause 2
+Next IllusionLoopFour
+
+portc=%11110000			‘C7 C6 C5 C4
+portb=%11111111			‘B6 B2 D6 B7 B3 D7 D0 B4 B0 D1 B1 D4 D2
+portd=%11111111			‘B5 D5 D3 
+Pause 1500
+
+for IllusionLoopFour = 1 to 250
+portc=%11100000			‘C7 C6 C5
+portb=%11111111			‘all on
+portd=%11111111			
+Pause 2
+portc=%00010000			‘C4
+portb=%01111101			‘B1 B7 D6 D4
+portd=%10101111
+Pause 2
+Next IllusionLoopFour
+
+for IllusionLoopFour = 1 to 125
+portc=%11000000			‘C7 C6
+portb=%11111111			‘all on
+portd=%11111111			
+Pause 4
+portc=%00100000			‘C5
+portb=%01111101			‘B1 B7 D6 D4
+portd=%10101111
+Pause 2
+portc=%00010000			‘C4
+portb=%00110100			‘B1 B7 D6 D4
+portd=%10001111			‘B6 B3 B0 D5
+Pause 2
+Next IllusionLoopFour
+
+for IllusionLoopFour = 1 to 125
+portc=%10000000			‘C7
+portb=%11111111			‘all on
+portd=%11111111			
+Pause 2
+portc=%01000000			‘C6
+portb=%01111101			‘B1 B7 D6 D4
+portd=%10101111
+Pause 2
+portc=%00100000			‘C5
+portb=%00110100			‘B1 B7 D6 D4
+portd=%10001111			‘B6 B3 B0 D5
+Pause 2
+portc=%00010000			‘C4
+portb=%00010000			‘B1 B7 D6 D4 B6 B3 B0 D5
+portd=%10001001			‘D1 B5 B2 D2
+Pause 2
+Next IllusionLoopFour
+
+for IllusionLoopFour = 1 to 125
+portc=%10000000			‘C7
+portb=%01111101			‘B1 B7 D6 D4
+portd=%10101111
+Pause 2
+portc=%01000000			‘C6
+portb=%00110100			‘B1 B7 D6 D4
+portd=%10001111			‘B6 B3 B0 D5
+Pause 2
+portc=%00110000			‘C5 C4
+portb=%00010000			‘B1 B7 D6 D4 B6 B3 B0 D5
+portd=%10001001			‘D1 B5 B2 D2
+Pause 4
+Next IllusionLoopFour
+
+for IllusionLoopFour = 1 to 125
+portc=%10000000			‘C7
+portb=%01111101			‘B1 B7 D6 D4
+portd=%10101111
+Pause 4
+portc=%01110000			‘C6 C5 C4
+portb=%00010000			‘B1 B7 D6 D4 B6 B3 B0 D5
+portd=%10001001			‘D1 B5 B2 D2
+Pause 4
+Next IllusionLoopFour
+
+portc=%11110000			‘C7 C6 C5 C4
+portb=%00010000			‘B1 B7 D6 D4 B6 B3 B0 D5
+portd=%10001001			‘D1 B5 B2 D2
+Pause 2000
+
+‘Windmill animation (with 2 blades)
+portc= %11110000			‘Turns on all the layers
+for WindMillLoop = 1 to 8
+portd= %10001001			‘D3 D0 centre led (changes every 3 moves) D7
+portb= %00010000			‘centre led B4
+Pause WindMillTime
+
+portd= %10000110			‘D1 D2 centre led: D7
+Pause WindMillTime
+
+portb= %00110000			‘B5 B4
+portd= %11000000			‘centre led D7 D6
+Pause WindMillTime
+
+portb=%00001111			‘B2 B1 central led: B3 B0
+Pause WindMillTime
+
+portd=%00100000			‘D5
+portb=%01001001			‘B6 central led: B0 B3	
+Pause WindMillTime
+
+portd=%00010000			‘D4
+portb=%10001001			‘B7 central led: B3 B0 
+Pause WindMillTime
+
+next WindMillLoop
+
+‘Transition Code (from windmill to all LED off)
+portd=%10001001			‘D3 D7 D0
+portb=%00010000			‘B4
+Pause WindMillTime
+
+portd=%10001111			‘D3 D7 D0 D1 D2
+portb=%00010000			‘B4
+Pause WindMillTime
+
+portd=%11001111			‘D3 D7 D0 D1 D2 D6
+portb=%00110000			‘B4 B5
+Pause WindMillTime
+
+portd=%11001111			‘D3 D7 D0 D1 D2 D6 
+portb=%00111111			‘B4 B5 B0 B1 B3 B2
+Pause WindMillTime
+
+portd=%11101111			‘D3 D7 D0 D1 D2 D6 D5
+portb=%01111111			‘B4 B5 B0 B1 B3 B2 B6
+Pause WindMillTime
+
+portd=%11111111			‘D3 D7 D0 D1 D2 D6 D5 D4  
+portb=%11111111			‘B4 B5 B0 B1 B3 B2 B6 B7 
+Pause WindMillTime
+
+portd=%11101111			‘D3 D7 D0 D1 D2 D6 D5
+portb=%01111111			‘B4 B5 B0 B1 B3 B2 B6
+Pause WindMillTime
+
+portd=%11001111			‘D3 D7 D0 D1 D2 D6 
+portb=%00111111			‘B4 B5 B0 B1 B3 B2
+Pause WindMillTime
+
+portd=%11001111			‘D3 D7 D0 D1 D2 D6
+portb=%00110000			‘B4 B5
+Pause WindMillTime
+
+portd=%10001111			‘D3 D7 D0 D1 D2
+portb=%00010000			‘B4
+Pause WindMillTime
+
+portd=%10001001			‘D3 D7 D0
+portb=%00010000			‘B4
+Pause WindMillTime
+
+portd=%10000000			‘D7 
+portb=%00010000			‘B4
+Pause WindMillTime
+
+portc=%00000000
+portd=%00000000			
+portb=%00000000			
+Pause WindMillTime
+
+Goto MAIN
